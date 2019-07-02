@@ -4,33 +4,33 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CategoryPage {
+    private final WebDriver driver;
 
-    WebDriver driver;
-    WebDriverWait wait;
-
-    @FindBy(xpath = "//span[@class='cat-name']")
-    private WebElement titleCategory;
+    @FindBy(id = "subcategories")
+    private WebElement subCategories;
 
     @FindBy(xpath = "//a[@class='product-name'][contains(text(),'Blouse')]")
     private WebElement blouseListing;
 
-    public String getCategoryPageTitle() {
-        return driver.getTitle();
-    }
-
     public void clickOnListing() {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(blouseListing));
         blouseListing.click();
     }
 
-    public WebElement getTitleCategory(){
-        return titleCategory;
+    public void pageIsLoaded(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(subCategories));
     }
 
+
     public CategoryPage(WebDriver driver) {
-        this.driver = driver;
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 }

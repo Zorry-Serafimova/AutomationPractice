@@ -1,16 +1,16 @@
-package Base;
+package PageObjects;
 
+import Base.BaseUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HelperClass {
-    static WebDriver driver;
-    static WebDriverWait wait;
+    private static WebDriverWait wait;
 
     public static void isElementClickable(WebDriver driver, int timeout, WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait = new WebDriverWait(driver, timeout);
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (Exception e) {

@@ -11,8 +11,5 @@ public class BaseUtils {
     public WebDriverWait wait;
     public WebDriver driver;
     public String baseURL;
-    public LoginPage login;
-    public MyAccountPage myAccount;
-    public CategoryPage catPage;
 
 }
