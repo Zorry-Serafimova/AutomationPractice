@@ -8,14 +8,14 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
-    @FindBy(id="email")
-    WebElement emailLoggin;
+    @FindBy(id = "email")
+    private WebElement emailLoggin;
 
-    @FindBy(id="passwd")
-    WebElement passwdLoggin;
+    @FindBy(id = "passwd")
+    private WebElement passwdLoggin;
 
-    @FindBy(id="SubmitLogin")
-    WebElement loggInButton;
+    @FindBy(id = "SubmitLogin")
+    private WebElement loggInButton;
 
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);

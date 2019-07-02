@@ -2,18 +2,14 @@ package StepDefinitions;
 
 import Base.BaseUtils;
 import PageObjects.CategoryPage;
+import PageObjects.ItemDetailPage;
 import PageObjects.LoginPage;
 import PageObjects.MyAccountPage;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import static PageObjects.HelperClass.waitUntilElementVisible;
 
 public class AutomationPracticeStepDefinitions extends BaseUtils {
 
@@ -42,22 +38,14 @@ public class AutomationPracticeStepDefinitions extends BaseUtils {
     @Then("^User is On My Account page$")
     public void userIsOnMyAccountPage() {
         MyAccountPage myAccountPage = new MyAccountPage(base.driver);
-        waitUntilElementVisible(base.driver, 5, myAccountPage.getWelcomeMessage());
-        /*base.wait = new WebDriverWait(base.driver, 5);
-        try {
-            wait.until(ExpectedConditions.titleIs("My account - My Store"));
-            final WebElement until = wait.until(ExpectedConditions.visibilityOf(myAccountPage.getWelcomeMessage()));
-        } catch (Exception e) {
-            System.out.println("not visible");
-        }*/
+        myAccountPage.WelcomeMessageIsVisible();
         Assert.assertEquals(base.driver.getTitle(), "My account - My Store");
     }
 
     @Given("^Women Category exists on page$")
     public void womenCategoryExistsOnPage() {
         MyAccountPage myAccountPage = new MyAccountPage(base.driver);
-
-        waitUntilElementVisible(base.driver, 5, myAccountPage.getWomenOption());
+        myAccountPage.WomenOptionExists();
     }
 
     @When("^User clicks on Women category$")
@@ -66,10 +54,54 @@ public class AutomationPracticeStepDefinitions extends BaseUtils {
         myAccountPage.clickOnWomenCategory();
     }
 
-    @Then("^Women Category page is loaded$")
+    @And("^Women Category page is loaded$")
     public void womenCategoryPageIsLoaded() {
         CategoryPage categoryPage = new CategoryPage(base.driver);
         categoryPage.pageIsLoaded();
         Assert.assertEquals(base.driver.getTitle(), "Women - My Store");
+    }
+
+
+    @And("^User is on the Women's category page$")
+    public void userIsOnTheWomenSCategoryPage() {
+        CategoryPage categoryPage = new CategoryPage(base.driver);
+        //check page
+        if(!base.driver.getTitle().equals("Women - My Store"))
+        {
+            MyAccountPage myAccountPage = new MyAccountPage(base.driver);
+            myAccountPage.clickOnWomenCategory();
+        }
+    }
+
+    @And("^User clicks on a listing$")
+    public void userClicksOnAListing() {
+        CategoryPage categoryPage = new CategoryPage(base.driver);
+        categoryPage.clickOnListing();
+    }
+
+    @And("^Listing page is loaded$")
+    public void listingPageIsLoaded() throws InterruptedException {
+        ItemDetailPage itemDetailPage = getItemDetailPage();
+        itemDetailPage.confirmAddToCartContainer();
+        Thread.sleep(3000);
+        System.out.println(base.driver.getTitle());
+        Assert.assertEquals(base.driver.getTitle(), "Blouse - My Store");
+    }
+
+    @And("^User adds listing to Cart$")
+    public void userAddsListingToCart() {
+        ItemDetailPage itemDetailPage = getItemDetailPage();
+        itemDetailPage.addToCartClick();
+
+    }
+
+    @Then("^Listing is added to cart$")
+    public void listingIsAddedToCart() {
+        ItemDetailPage itemDetailPage = getItemDetailPage();
+        itemDetailPage.proceedToCheckoutButtonClick();
+    }
+
+    private ItemDetailPage getItemDetailPage() {
+        return new ItemDetailPage(base.driver);
     }
 }
