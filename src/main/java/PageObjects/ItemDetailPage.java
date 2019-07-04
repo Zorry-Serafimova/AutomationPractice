@@ -27,9 +27,6 @@ public class ItemDetailPage {
         isElementClickable(driver, 5, addToCartButton);
         addToCartButton.click();
     }
-   /* public WebElement addToCartConfirmation() {
-        return driver.findElement(By.cssSelector("#layer_cart"));
-    }*/
 
     public void proceedToCheckoutButtonClick() {
         WebElement proceedToCheckoutButton = driver.findElement(By.xpath("//span[contains(text(),'Proceed to checkout')]"));

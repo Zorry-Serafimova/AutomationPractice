@@ -13,4 +13,15 @@ Feature: Automation Practice website, final Project
     And User clicks on a listing
     And Listing page is loaded
     And User adds listing to Cart
-    Then Listing is added to cart
+    And Listing is added to cart
+    And User clicks on proceed to checkout button
+    And User changes delivery address
+    And User Check delivery and billing address
+    And User goes to Shipping, click Terms of service and proceed to checkout
+    And User selects pay by check
+    And User confirms Order
+    And Confirm order submitted
+    And Go back to orders
+    Then Logout
+
+

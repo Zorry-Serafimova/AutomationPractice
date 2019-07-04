@@ -1,14 +1,13 @@
 package StepDefinitions;
 
 import Base.BaseUtils;
-import PageObjects.CategoryPage;
-import PageObjects.ItemDetailPage;
-import PageObjects.LoginPage;
-import PageObjects.MyAccountPage;
+import PageObjects.*;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class AutomationPracticeStepDefinitions extends BaseUtils {
@@ -66,8 +65,7 @@ public class AutomationPracticeStepDefinitions extends BaseUtils {
     public void userIsOnTheWomenSCategoryPage() {
         CategoryPage categoryPage = new CategoryPage(base.driver);
         //check page
-        if(!base.driver.getTitle().equals("Women - My Store"))
-        {
+        if (!base.driver.getTitle().equals("Women - My Store")) {
             MyAccountPage myAccountPage = new MyAccountPage(base.driver);
             myAccountPage.clickOnWomenCategory();
         }
@@ -103,5 +101,33 @@ public class AutomationPracticeStepDefinitions extends BaseUtils {
 
     private ItemDetailPage getItemDetailPage() {
         return new ItemDetailPage(base.driver);
+    }
+    private CheckoutProcessAlertPage getcheckoutProcess() {
+        return new CheckoutProcessAlertPage(base.driver);
+    }
+    private VerifyAddressPage getVerVerifyAddress(){
+        return new VerifyAddressPage(base.driver);
+    }
+    private ChangeAddressPage getChangeAddress(){
+        return new ChangeAddressPage(base.driver);
+    }
+
+    @And("^User clicks on proceed to checkout button$")
+    public void userClicksOnProceedToCheckoutButton() throws InterruptedException {
+        base.checkoutProcess = getcheckoutProcess();
+        base.checkoutProcess.getCheckoutContainer(base.driver);
+        base.checkoutProcess.clickProceedToCheckoutClick(base.driver);
+        Thread.sleep(4000);
+    }
+
+
+    @And("^User changes delivery address$")
+    public void userChangesDeliveryAddress() {
+        base.verifyAddress = getVerVerifyAddress();
+        base.verifyAddress.clickUpdatebtn(base.driver);
+        base.changeAddress = getChangeAddress();
+        base.changeAddress.clearDeliveryAddressFieldsFirst(base.driver);
+        base.changeAddress.enterNewDeliveryAddress();
+        System.out.println();
     }
 }
